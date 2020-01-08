@@ -3,7 +3,6 @@ const router = new express.Router()
 const User = require('../models/user')
 const auth = require('../middleware/auth')
 
-
 router.post('/users', async (req, res) => {
     const user = new User(req.body);
     try {
@@ -53,6 +52,16 @@ router.post('/users/logoutAll', auth, async (req, res) => {
     } catch(e) {
         res.status(500).send()
     }
+})
+
+const multer = require('multer')
+
+const upload = multer({
+    dest: 'avatar'
+})
+
+router.post('/users/me/avatar', upload.single('avatar'), async (req, res) => {
+    res.send()
 })
 
 router.get('/users/me', auth, async (req, res) => {
